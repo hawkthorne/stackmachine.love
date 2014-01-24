@@ -1,5 +1,7 @@
 # StackMachine SDK for [LÖVE](http://love2d.org)
 
+[![Build Status](https://travis-ci.org/stackmachine/stackmachine.love.png?branch=master)](https://travis-ci.org/stackmachine/stackmachine.love)
+
 The StackMachine SDK is responsible for intgrating StackMachine and the LOVE
 game engine. This SDK handles automaticac updates, crash reporting, and player
 metrics.
