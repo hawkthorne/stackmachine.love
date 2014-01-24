@@ -1,9 +1,9 @@
-local logging = require "sparkle/logging"
+local logging = require "stackmachine/logging"
 local os = require "os"
 local url = require "socket.url"
-local urllib = require "sparkle/urllib"
-local utils = require "sparkle/utils"
-local glove = require "sparkle/glove"
+local urllib = require "stackmachine/urllib"
+local utils = require "stackmachine/utils"
+local glove = require "stackmachine/glove"
 
 local windows = {}
 local logger = logging.new('update')

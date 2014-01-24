@@ -1,7 +1,7 @@
-local glove = require 'sparkle/glove'
-local json = require 'sparkle/json'
-local tasks = require 'sparkle/tasks'
-local config = require 'sparkle/config'
+local glove = require 'stackmachine/glove'
+local json = require 'stackmachine/json'
+local tasks = require 'stackmachine/tasks'
+local config = require 'stackmachine/config'
 local module = {}
 
 -- Given a stack message, return a JSON-encoded string

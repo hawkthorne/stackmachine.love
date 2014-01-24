@@ -1,7 +1,7 @@
-local json = require 'sparkle/json'
+local json = require 'stackmachine/json'
 
-if love.filesystem.exists("sparkle/config.json") then
-  local contents, _ = love.filesystem.read("sparkle/config.json")
+if love.filesystem.exists("stackmachine/config.json") then
+  local contents, _ = love.filesystem.read("stackmachine/config.json")
   return json.decode(contents)
 end
 

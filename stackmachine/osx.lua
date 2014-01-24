@@ -1,10 +1,10 @@
 require "love.timer"
 
 local os = require "os"
-local glove = require "sparkle/glove"
-local urllib = require "sparkle/urllib"
-local logging = require "sparkle/logging"
-local utils = require "sparkle/utils"
+local glove = require "stackmachine/glove"
+local urllib = require "stackmachine/urllib"
+local logging = require "stackmachine/logging"
+local utils = require "stackmachine/utils"
 
 local osx = {}
 local logger = logging.new('update')

@@ -25,7 +25,7 @@ endif
 test: $(LOVE)
 	rm -rf "$($HOME)/Library/Application Support/LOVE/glove"
 	rm -rf test/stackmachine
-	cp -r stackmachine
+	cp -r stackmachine test
 	$(LOVE) test
 
 all:

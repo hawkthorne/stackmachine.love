@@ -1,7 +1,7 @@
 require 'love.filesystem'
 
-local glove = require "sparkle/glove"
-local json = require "sparkle/json"
+local glove = require "stackmachine/glove"
+local json = require "stackmachine/json"
 local http = require "socket.http"
 local ltn12 = require "ltn12"
 

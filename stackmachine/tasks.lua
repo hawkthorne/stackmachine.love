@@ -1,7 +1,7 @@
-local glove = require 'sparkle/glove'
-local utils = require 'sparkle/utils'
-local config = require 'sparkle/config'
-local json = require "sparkle/json"
+local glove = require 'stackmachine/glove'
+local utils = require 'stackmachine/utils'
+local config = require 'stackmachine/config'
+local json = require "stackmachine/json"
 local http = require "socket.http"
 local ltn12 = require "ltn12"
 
@@ -17,7 +17,7 @@ function tasks.report(message, data)
   data["distinct_id"] = utils.distinctId()
 
   if thread == nil then
-    thread = glove.thread.newThread("tasks", "sparkle/task_thread.lua")
+    thread = glove.thread.newThread("tasks", "stackmachine/task_thread.lua")
     thread:start()
   end
 
@@ -37,7 +37,7 @@ end
 
 function tasks.track(event, data)
   if thread == nil then
-    thread = glove.thread.newThread("tasks", "sparkle/task_thread.lua")
+    thread = glove.thread.newThread("tasks", "stackmachine/task_thread.lua")
     thread:start()
   end
 
@@ -61,4 +61,3 @@ end
 
 
 return tasks
-
