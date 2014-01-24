@@ -10,7 +10,7 @@ local crossplatform = {}
 local logger = logging.new('update')
 
 
-function launchCommand(args)
+function crossplatform.launchCommand(args)
   local command = ""
 
   if love._version == "0.8.0" then
@@ -24,14 +24,19 @@ function launchCommand(args)
   end
 
   for i,v in ipairs(args) do
-    command = string.format("%s \"%s\"", command, v)
+    if command == "" then
+      command = string.format("\"%s\"", v)
+    else
+      command = string.format("%s \"%s\"", command, v)
+    end
   end
 
   return command
 end
 
 
-function restartCommand(launch)
+function crossplatform.restartCommand(args)
+  local launch = crossplatform.launchCommand(args)
   if love._os == "OS X" or love._os == "Linux" then
     return string.format("(sleep 1; %s) & > /dev/null 2>&1", launch)
   elseif love._os == "Windows" then
@@ -84,7 +89,7 @@ function crossplatform.replace(download, oldpath, args, callback)
   os.rename(lovefile, args[3])
   callback(false, "Installing", 100)
 
-  local cmd = restartCommand(args)
+  local cmd = crossplatform.restartCommand(args)
 
   if cmd then
     logger:info(cmd)

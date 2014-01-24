@@ -1,8 +1,10 @@
 local stackmachine = require "stackmachine"
-local osx = require "stackmachine/osx"
 local glove = require "stackmachine/glove"
-local windows = require "stackmachine/windows"
 local utils = require "stackmachine/utils"
+
+local windows = require "stackmachine/windows"
+local osx = require "stackmachine/osx"
+local crossplatform = require "stackmachine/crossplatform"
 
 local targs = { [-1] = "game.exe"}
 local u = stackmachine.newUpdater(targs, "0.0.0", "http://example.com")
@@ -121,4 +123,16 @@ function test_windows_split()
   local dir, base = windows.split("C:\\foo\\bar\\foo.exe")
   assert_equal("foo.exe", base)
   assert_equal("C:\\foo\\bar", dir)
+end
+
+function test_launch_command()
+  local args = {'foo', 'embedded boot.lua', 'src'}
+  local command = crossplatform.launchCommand(args)
+  assert_equal('"foo" "src"', command)
+end
+
+function test_restart_command()
+  local args = {'foo', 'embedded boot.lua', 'src'}
+  local command = crossplatform.restartCommand(args)
+  assert_match('"foo" "src"', command)
 end
