@@ -148,6 +148,10 @@ function stackmachine.update(lovepath, version, url, callback)
   local callback = callback or function(s, p) end
   local platform = stackmachine.getPlatform()
 
+  if glove.filesystem.isFused() then
+    error("Can't update non-fused games")
+  end
+
   if platform == nil then
     error("Current platform doesn't support automatic updates")
   end
