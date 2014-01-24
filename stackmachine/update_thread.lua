@@ -2,7 +2,7 @@ require "love.filesystem"
 require "love.event"
 
 local glove = require("stackmachine/glove")
-local stackmachine = require("sparkle")
+local stackmachine = require("stackmachine")
 local json = require("stackmachine/json")
 
 local thread = glove.thread.getThread()
