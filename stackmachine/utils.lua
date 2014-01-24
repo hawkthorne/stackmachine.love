@@ -52,4 +52,21 @@ function utils.getLow(a)
 	return a[m]
 end
 
+function utils.naturalKeys(a)
+  local keys = {}
+  local natural = {}
+
+	for k,v in pairs(a) do
+    table.insert(keys, k)
+	end
+
+  table.sort(keys)
+
+	for _,k in ipairs(keys) do
+    table.insert(natural, a[k])
+	end
+
+	return natural
+end
+
 return utils

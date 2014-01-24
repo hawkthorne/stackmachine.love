@@ -19,7 +19,9 @@ local function execute(command, msg)
   end
 end
 
-function osx.getApplicationPath(applicationPath)
+function osx.getApplicationPath(args)
+  local applicationPath = args[1]
+
   -- Remove /Contents/MacOS/love from the working directory
   local path = applicationPath:sub(0, -20)
 
@@ -53,7 +55,7 @@ function osx.getDownload(item)
   return nil
 end
 
-function osx.replace(download, oldpath, callback)
+function osx.replace(download, oldpath, args, callback)
   glove.filesystem.mkdir("updates")
 
   local destination = love.filesystem.getSaveDirectory() .. "/updates"

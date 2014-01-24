@@ -9,7 +9,7 @@ local thread = glove.thread.getThread()
 
 local version = thread:demand('version')
 local url = thread:demand('url')
-local lovepath = thread:demand('lovepath')
+local args = json.decode(thread:demand('args'))
 
 local function statusCallback(finished, status, percent)
   thread:set('finished', finished)
@@ -17,5 +17,5 @@ local function statusCallback(finished, status, percent)
   thread:set('percent', percent)
 end
 
-stackmachine.update(lovepath, version, url, statusCallback)
+stackmachine.update(args, version, url, statusCallback)
 

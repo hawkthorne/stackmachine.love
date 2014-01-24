@@ -2,6 +2,7 @@ local stackmachine = require "stackmachine"
 local osx = require "stackmachine/osx"
 local glove = require "stackmachine/glove"
 local windows = require "stackmachine/windows"
+local utils = require "stackmachine/utils"
 
 local targs = { [-1] = "game.exe"}
 local u = stackmachine.newUpdater(targs, "0.0.0", "http://example.com")
@@ -11,18 +12,32 @@ function test_updater_create()
   assert_true(u:done())
 end
 
+function test_natural_keys()
+  local args = {
+    [-1] = 'foo',
+    [-2] = 'bar',
+    [1]  = 'bat',
+  }
+
+  local natural = utils.naturalKeys(args)
+  assert_equal('bar', natural[1])
+  assert_equal('foo', natural[2])
+  assert_equal('bat', natural[3])
+end
+
+
 function test_osx_get_application_path()
-  local path = osx.getApplicationPath("/Users/joe/projects/hawkthorne-journey/Journey to the Center of Hawkthorne.app/Contents/Resources")
+  local path = osx.getApplicationPath({"/Users/joe/projects/hawkthorne-journey/Journey to the Center of Hawkthorne.app/Contents/Resources"})
   assert_equal("/Users/joe/projects/hawkthorne-journey/Journey to the Center of Hawkthorne.app", path)
 end
 
 function test_osx_short_path()
-  local path = osx.getApplicationPath("//")
+  local path = osx.getApplicationPath({"//"})
   assert_equal(path, "")
 end
 
 function test_osx_no_root_path()
-  local path = osx.getApplicationPath("//Contents/Resources")
+  local path = osx.getApplicationPath({"//Contents/Resources"})
   assert_equal(path, "")
 end
 

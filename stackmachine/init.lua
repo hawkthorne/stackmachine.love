@@ -1,10 +1,9 @@
 require "love.filesystem"
-
-local glove = require "stackmachine/glove"
 local http = require "socket.http"
 local ltn12 = require "ltn12"
 local os = require "os"
 
+local glove = require "stackmachine/glove"
 local middle = require 'stackmachine/middleclass'
 local json = require 'stackmachine/json'
 local logging = require 'stackmachine/logging'
@@ -18,12 +17,11 @@ local logger = logging.new("update")
 function Updater:initialize(args, version, url)
   self.thread = nil
   self.version = version
-  -- FIXME: Remove
-  self.lovepath = utils.getLow(args)
+  self.args = utils.naturalKeys(args)
   self.url = url
   self._finished = url == ""
 
-  logger:info("LOVEPATH: " .. self.lovepath)
+  logger:info("ARGS: " .. json.encode(args))
 end
 
 function Updater:done()
@@ -37,10 +35,10 @@ function Updater:start()
   end
 
   if not self.thread then
-    self.thread = glove.thread.newThread("stackmachine", "stackmachine/thread.lua")
+    self.thread = glove.thread.newThread("stackmachine", "stackmachine/update_thread.lua")
     self.thread:start()
     self.thread:set('version', self.version)
-    self.thread:set('lovepath', self.lovepath)
+    self.thread:set('args', json.encode(self.args))
     self.thread:set('url', self.url)
   end
 end
@@ -144,13 +142,14 @@ function stackmachine.getPlatform()
 end
 
 -- This method blocks and should never be called directly, use the updater object
-function stackmachine.update(lovepath, version, url, callback)
+function stackmachine.update(args, version, url, callback)
   local callback = callback or function(s, p) end
-  local platform = stackmachine.getPlatform()
 
   if glove.filesystem.isFused() then
     error("Can't update non-fused games")
   end
+
+  local platform = stackmachine.getPlatform()
 
   if platform == nil then
     error("Current platform doesn't support automatic updates")
@@ -159,7 +158,7 @@ function stackmachine.update(lovepath, version, url, callback)
   -- Clean up after old updates
   platform.cleanup()
 
-  local oldpath = platform.getApplicationPath(lovepath)
+  local oldpath = platform.getApplicationPath(args)
 
   if oldpath == "" then
     logger:info("Can't find application directory")
@@ -191,7 +190,7 @@ function stackmachine.update(lovepath, version, url, callback)
   end
 
   -- Replace the current app with the download application
-  platform.replace(download, oldpath, callback)
+  platform.replace(download, oldpath, args, callback)
 
   -- Quit the current program
   love.event.push("quit")

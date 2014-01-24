@@ -42,11 +42,11 @@ local function execute(command, msg)
   end
 end
 
-function windows.getApplicationPath(lovepath)
+function windows.getApplicationPath(args)
   if love._exe then
     return ""
   end
-  return lovepath
+  return args[1]
 end
 
 function windows.getDownload(item)
@@ -102,7 +102,7 @@ function windows.cleanup()
   windows.removeRecursive("winupdates")
 end
 
-function windows.replace(download, exepath, callback)
+function windows.replace(download, exepath, args, callback)
   -- Clean up previous updates
   windows.removeRecursive("winupdates")
   glove.filesystem.mkdir("winupdates")
