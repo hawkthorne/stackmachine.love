@@ -25,6 +25,9 @@ function test_natural_keys()
   assert_equal('bat', natural[3])
 end
 
+function test_working_directory()
+  assert_not_equal("", love.filesystem.getWorkingDirectory())
+end
 
 function test_osx_get_application_path()
   local path = osx.getApplicationPath({"/Users/joe/projects/hawkthorne-journey/Journey to the Center of Hawkthorne.app/Contents/Resources"})
@@ -112,4 +115,10 @@ function test_stackmachine_windows_basename()
   local url = "http://files.projecthawkthorne.com/releases/v0.0.84/i386/OpenAL32.dll"
   local basename = windows.basename(url)
   assert_equal("OpenAL32.dll", basename)
+end
+
+function test_windows_split()
+  local dir, base = windows.split("C:\\foo\\bar\\foo.exe")
+  assert_equal("foo.exe", base)
+  assert_equal("C:\\foo\\bar", dir)
 end

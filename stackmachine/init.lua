@@ -7,9 +7,11 @@ local glove = require "stackmachine/glove"
 local middle = require 'stackmachine/middleclass'
 local json = require 'stackmachine/json'
 local logging = require 'stackmachine/logging'
+local utils = require 'stackmachine/utils'
+
+local crossplatform = require 'stackmachine/crossplatform'
 local osx = require 'stackmachine/osx'
 local windows = require 'stackmachine/windows'
-local utils = require 'stackmachine/utils'
 
 local Updater = middle.class('Updater')
 local logger = logging.new("update")
@@ -132,7 +134,9 @@ function stackmachine.isNewer(version, other)
 end
 
 function stackmachine.getPlatform()
-  if love._os == "OS X" then
+  if not love.filesystem.isFused() then
+    return crossplatform
+  elseif love._os == "OS X" then
     return osx
   elseif love._os == "Windows" then
     return windows
@@ -144,11 +148,6 @@ end
 -- This method blocks and should never be called directly, use the updater object
 function stackmachine.update(args, version, url, callback)
   local callback = callback or function(s, p) end
-
-  if glove.filesystem.isFused() then
-    error("Can't update non-fused games")
-  end
-
   local platform = stackmachine.getPlatform()
 
   if platform == nil then
