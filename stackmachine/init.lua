@@ -134,7 +134,7 @@ function stackmachine.isNewer(version, other)
 end
 
 function stackmachine.getPlatform()
-  if not love.filesystem.isFused() then
+  if not glove.filesystem.isFused() then
     return crossplatform
   elseif love._os == "OS X" then
     return osx
